@@ -72,10 +72,10 @@ exports.updatepassword = (req, res) => {
         const { newpassword } = req.query;
         const { resetpasswordid } = req.params;
         password.findOne({ where : { id: resetpasswordid }}).then(resetpasswordrequest => {
-            Users.findOne({where: { id : resetpasswordrequest.userId}}).then(user => {
-                // console.log('userDetails', user)
-                if(user) {
-                    //encrypt the password
+        Users.findOne({where: { id : resetpasswordrequest.userId}}).then(user => {
+               
+         if(user) {
+                  
 
                     const saltRounds = 10;
                     bcrypt.genSalt(saltRounds, function(err, salt) {
@@ -84,16 +84,16 @@ exports.updatepassword = (req, res) => {
                             throw new Error(err);
                         }
                         bcrypt.hash(newpassword, salt, function(err, hash) {
-                            // Store hash in your password DB.
+                           
                             if(err){
                                 console.log(err);
                                 throw new Error(err);
-                            }
-                            user.update({ password: hash }).then(() => {
-                                res.status(201).json({message: 'Successfuly update the new password'})
-                            })
-                        });
-                    });
+                      }
+                     ser.update({ password: hash }).then(() => {
+                           res.status(201).json({message: 'Successfuly update the new password'})
+                   })
+                   });
+                  });
             } else{
                 return res.status(404).json({ error: 'No user Exists', success: false})
             }
